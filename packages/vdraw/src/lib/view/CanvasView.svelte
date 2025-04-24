@@ -8,8 +8,8 @@
 	const canvas = $state(createCanvas());
 </script>
 
-<!-- svelte-ignore a11y_click_events_have_key_events -->
 <!-- svelte-ignore a11y_no_static_element_interactions -->
+<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 <svg
 	xmlns="http://www.w3.org/2000/svg"
 	width="100%"
@@ -17,7 +17,6 @@
 	preserveAspectRatio="none"
 	onclick={(event) => {
 		if (canvas.selected.size !== 0) {
-			canvas.selected.forEach((s) => (s.selected = false));
 			canvas.selected.clear();
 		} else {
 			canvas.toolPalette.currentTool.onclick(event, canvas);
@@ -26,7 +25,7 @@
 >
 	{#each canvas.shapes as shape (shape)}
 		{@const ShapeComponent = mapModelView[shape.type]}
-		<ShapeComponent {shape} onSelection={() => canvas.selected.add(shape)} />
+		<ShapeComponent {shape} onclick={() => canvas.selected.add(shape)} />
 	{/each}
 
 	{#each canvas.selected as shape (shape)}

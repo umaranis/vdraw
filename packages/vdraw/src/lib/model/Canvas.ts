@@ -26,8 +26,3 @@ export function createCanvas(): Canvas {
 		selected: new SvelteSet()
 	};
 }
-
-export function addToSelection(canvas: Canvas, shape: Shape) {
-	canvas.selected.add(shape);
-	shape.selected = true;
-}

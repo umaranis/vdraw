@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { RectangleType } from '../../model/shapes/Rectangle.js';
 
-	let { shape: r, onSelection }: { shape: RectangleType; onSelection: () => void } = $props();
+	let { shape: r, onclick }: { shape: RectangleType; onclick: () => void } = $props();
 </script>
 
 <!-- svelte-ignore a11y_click_events_have_key_events -->
@@ -16,7 +16,6 @@
 	stroke-width={r.strokeWidth}
 	onclick={(e) => {
 		e.stopPropagation();
-		r.selected = true;
-		onSelection();
+		onclick();
 	}}
 />
