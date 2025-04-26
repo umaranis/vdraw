@@ -1,5 +1,5 @@
-import type {Canvas} from "$lib/model/Canvas.js";
+import type { Canvas } from '$lib/model/Canvas.js';
 
 export interface Tool {
-    onclick(e: MouseEvent, canvas: Canvas): void
+	onclick(e: MouseEvent, canvas: Canvas): void;
 }
