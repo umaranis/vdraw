@@ -32,6 +32,26 @@ test('rectangle - select', async ({ page }) => {
 	expect(rectCount).toBeGreaterThan(2);
 });
 
+test('rectangle - de-select', async ({ page }) => {
+	await page.goto('/');
+
+	// no rectangles yet
+	await expect(page.locator('rect')).not.toBeVisible();
+
+	// add one rect
+	await page.click('svg');
+	await expect(page.locator('rect')).toBeVisible();
+
+	// select rect
+	await page.locator('rect').click();
+	const rectCount = await page.locator('rect').count();
+	expect(rectCount).toBeGreaterThan(2);
+
+	// de-select rect
+	await page.keyboard.press('Escape');
+	await expect(await page.locator('rect').count()).toBe(1);
+});
+
 test('rectangle - delete using backspace', async ({ page }) => {
 	await page.goto('/');
 
