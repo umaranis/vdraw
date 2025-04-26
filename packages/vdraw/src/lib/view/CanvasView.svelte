@@ -22,6 +22,24 @@
 			canvas.toolPalette.currentTool.onclick(event, canvas);
 		}
 	}}
+	onkeydown={(event) => {
+		switch (event.key) {
+			case 'Escape':
+				canvas.selected.clear();
+				break;
+			case 'Delete':
+			case 'Backspace':
+				// Remove selected shapes in place
+				for (let i = canvas.shapes.length - 1; i >= 0; i--) {
+					if (canvas.selected.has(canvas.shapes[i])) {
+						canvas.shapes.splice(i, 1);
+					}
+				}
+				canvas.selected.clear();
+				break;
+		}
+	}}
+	tabindex="0"
 >
 	{#each canvas.shapes as shape (shape)}
 		{@const ShapeComponent = mapModelView[shape.type]}

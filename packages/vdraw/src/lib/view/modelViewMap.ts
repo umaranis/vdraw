@@ -1,13 +1,13 @@
-import type {Component} from "svelte";
-import RectView from "$lib/view/shapes/RectView.svelte";
+import type { Component } from 'svelte';
+import RectView from '$lib/view/shapes/RectView.svelte';
 
 export interface ModelViewMap {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  [key: string]: Component<any>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	[key: string]: Component<any>;
 }
 
 export function createModelViewMap(): ModelViewMap {
-  return {
-    "rect": RectView,
-  };
+	return {
+		rect: RectView
+	};
 }

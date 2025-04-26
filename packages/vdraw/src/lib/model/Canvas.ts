@@ -9,19 +9,8 @@ export interface Canvas {
 }
 
 export function createCanvas(): Canvas {
-	const r1 = {
-		type: 'rect',
-		selected: false,
-		x: 10,
-		y: 10,
-		width: 50,
-		height: 50,
-		fill: 'red',
-		stroke: 'black',
-		strokeWidth: 1
-	};
 	return {
-		shapes: [r1],
+		shapes: [],
 		toolPalette: createToolPalette(),
 		selected: new SvelteSet()
 	};
