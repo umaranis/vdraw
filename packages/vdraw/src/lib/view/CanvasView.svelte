@@ -1,12 +1,11 @@
 <script lang="ts">
-	import { createCanvas } from '../model/Canvas.js';
 	import { createModelSelectionViewMap, createModelViewMap } from '$lib/view/modelViewMap.js';
-	import Selection from '$lib/view/selection/RectSelection.svelte';
+	import { getCanvas } from './canvasContext.js';
 
 	const mapModelView = createModelViewMap();
 	const mapModelViewSelection = createModelSelectionViewMap();
 
-	const canvas = $state(createCanvas());
+	const canvas = getCanvas();
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
