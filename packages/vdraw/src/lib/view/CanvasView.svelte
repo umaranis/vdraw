@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { createCanvas } from '../model/Canvas.js';
-	import { createModelViewMap } from '$lib/view/modelViewMap.js';
-	import Selection from '$lib/view/selection/Selection.svelte';
+	import { createModelSelectionViewMap, createModelViewMap } from '$lib/view/modelViewMap.js';
+	import Selection from '$lib/view/selection/RectSelection.svelte';
 
 	const mapModelView = createModelViewMap();
+	const mapModelViewSelection = createModelSelectionViewMap();
 
 	const canvas = $state(createCanvas());
 </script>
@@ -53,7 +54,8 @@
 	{/each}
 
 	{#each canvas.selected as shape (shape)}
-		<Selection {shape} />
+		{@const SelectionComponent = mapModelViewSelection[shape.type]}
+		<SelectionComponent {shape} />
 	{/each}
 </svg>
 
