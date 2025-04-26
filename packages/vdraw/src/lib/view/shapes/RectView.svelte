@@ -14,8 +14,5 @@
 	fill={r.fill}
 	stroke={r.stroke}
 	stroke-width={r.strokeWidth}
-	onclick={(e) => {
-		e.stopPropagation();
-		onclick();
-	}}
+	{onclick}
 />

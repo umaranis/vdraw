@@ -43,7 +43,13 @@
 >
 	{#each canvas.shapes as shape (shape)}
 		{@const ShapeComponent = mapModelView[shape.type]}
-		<ShapeComponent {shape} onclick={() => canvas.selected.add(shape)} />
+		<ShapeComponent
+			{shape}
+			onclick={(e: MouseEvent) => {
+				e.stopPropagation();
+				canvas.selected.add(shape);
+			}}
+		/>
 	{/each}
 
 	{#each canvas.selected as shape (shape)}
