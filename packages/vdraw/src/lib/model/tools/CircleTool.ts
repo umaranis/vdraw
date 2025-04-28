@@ -11,7 +11,7 @@ export class CircleTool implements Tool {
 			radius: 50,
 			fill: 'blue',
 			stroke: 'black',
-			strokeWidth: 1
+			strokeWidth: 8
 		};
 		canvas.shapes.push(circle);
 	}

@@ -1,11 +1,34 @@
 <script lang="ts">
-	import { createModelSelectionViewMap, createModelViewMap } from '$lib/view/modelViewMap.js';
+	import type { Shape } from '$lib/model/shapes/Shape.js';
+	import { createModelViewMap } from '$lib/view/modelViewMap.js';
 	import { getCanvas } from './canvasContext.js';
 
 	const mapModelView = createModelViewMap();
-	const mapModelViewSelection = createModelSelectionViewMap();
 
 	const canvas = getCanvas();
+	const selectedSvgElements: Map<Shape, SVGElement> = new Map();
+
+	function addToSelection(shape: Shape, element: SVGGraphicsElement, clear: boolean = false) {
+		if (clear) {
+			clearSelection();
+		}
+		selectedSvgElements.set(shape, element);
+		canvas.selected.add(shape);
+	}
+	function removeFromSelection(shape: Shape) {
+		canvas.selected.delete(shape);
+		selectedSvgElements.delete(shape);
+	}
+	function clearSelection() {
+		canvas.selected.clear();
+		selectedSvgElements.clear();
+	}
+	function getSelectedSvgElement(shape: Shape) {
+		return selectedSvgElements.get(shape);
+	}
+
+	let draggedShape = $state<Shape | null>(null);
+	let hoveredShape = $state<Shape | null>(null);
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -15,9 +38,9 @@
 	width="100%"
 	height="80vh"
 	preserveAspectRatio="none"
-	onclick={(event) => {
+	onmousedown={(event) => {
 		if (canvas.selected.size !== 0) {
-			canvas.selected.clear();
+			clearSelection();
 		} else {
 			canvas.toolPalette.currentTool.onclick(event, canvas);
 		}
@@ -25,7 +48,7 @@
 	onkeydown={(event) => {
 		switch (event.key) {
 			case 'Escape':
-				canvas.selected.clear();
+				clearSelection();
 				break;
 			case 'Delete':
 			case 'Backspace':
@@ -35,31 +58,52 @@
 						canvas.shapes.splice(i, 1);
 					}
 				}
-				canvas.selected.clear();
+				clearSelection();
 				break;
 		}
 	}}
 	tabindex="0"
 >
 	{#each canvas.shapes as shape (shape)}
-		{@const ShapeComponent = mapModelView[shape.type]}
+		{@const ShapeComponent = mapModelView[shape.type].component}
 		<ShapeComponent
 			{shape}
-			onclick={(e: MouseEvent) => {
+			onmousedown={(e: MouseEvent) => {
 				e.stopPropagation();
-				canvas.selected.add(shape);
+				addToSelection(shape, e.target as SVGGraphicsElement, !e.shiftKey);
+				draggedShape = shape;
 			}}
+			onmouseenter={() => (hoveredShape = shape)}
+			onmouseleave={() => (hoveredShape = null)}
 		/>
 	{/each}
 
+	{#if hoveredShape}
+		{@const StrokeTraceComponent = mapModelView[hoveredShape.type].strokeTrace}
+		<StrokeTraceComponent shape={hoveredShape} />
+	{/if}
+
 	{#each canvas.selected as shape (shape)}
-		{@const SelectionComponent = mapModelViewSelection[shape.type]}
-		<SelectionComponent {shape} />
+		{@const SelectionComponent = mapModelView[shape.type].selection}
+		<SelectionComponent {shape} element={getSelectedSvgElement(shape)} />
 	{/each}
 </svg>
+
+<svelte:window
+	onmousemove={(event) => {
+		if (draggedShape) {
+			canvas.selected.forEach((shape) => {
+				shape.x += event.movementX;
+				shape.y += event.movementY;
+			});
+		}
+	}}
+	onmouseup={() => (draggedShape = null)}
+/>
 
 <style>
 	svg {
 		border: 1px solid black;
+		--selection-color: #3182ed;
 	}
 </style>

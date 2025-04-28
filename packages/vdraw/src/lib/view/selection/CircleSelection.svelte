@@ -1,43 +1,21 @@
 <script lang="ts">
 	import type { CircleType } from '../../model/shapes/Circle.js';
+	import { getSvgElement } from '../canvasContext.js';
+	import CircleStrokeTrace from './CircleStrokeTrace.svelte';
+	import SelectionDecoratorRect from './SelectionDecoratorRect.svelte';
 
-	let { shape: c }: { shape: CircleType } = $props();
+	let { shape: c, element }: { shape: CircleType; element: SVGGraphicsElement } = $props();
+	// getSvgElement doesn't return null because it is only called after the element is clicked and selected
+	let r = $derived.by(() => {
+		// add dependency
+		c.x;
+		c.y;
+		c.radius;
+
+		return element.getBBox();
+	});
+	let strokeWidth = $derived(c.strokeWidth ?? 0);
 </script>
 
-<circle cx={c.x} cy={c.y} r={c.radius + 2} stroke="lightblue" stroke-width="2" fill="none" />
-<rect
-	x={c.x - 4}
-	y={c.y - c.radius - 4}
-	width={8}
-	height={8}
-	stroke="lightblue"
-	stroke-width="2"
-	fill="white"
-/>
-<rect
-	x={c.x + c.radius - 4}
-	y={c.y - 4}
-	width={8}
-	height={8}
-	stroke="lightblue"
-	stroke-width="2"
-	fill="white"
-/>
-<rect
-	x={c.x - 4}
-	y={c.y + c.radius - 4}
-	width={8}
-	height={8}
-	stroke="lightblue"
-	stroke-width="2"
-	fill="white"
-/>
-<rect
-	x={c.x - c.radius - 4}
-	y={c.y - 4}
-	width={8}
-	height={8}
-	stroke="lightblue"
-	stroke-width="2"
-	fill="white"
-/>
+<CircleStrokeTrace shape={c} />
+<SelectionDecoratorRect {r} {strokeWidth} />

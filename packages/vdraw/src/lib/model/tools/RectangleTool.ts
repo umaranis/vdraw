@@ -12,7 +12,7 @@ export class RectangleTool implements Tool {
 			height: 100,
 			fill: 'red',
 			stroke: 'black',
-			strokeWidth: 1
+			strokeWidth: 8
 		};
 		canvas.shapes.push(rect);
 	}
