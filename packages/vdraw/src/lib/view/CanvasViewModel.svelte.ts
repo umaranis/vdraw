@@ -4,7 +4,10 @@ import { getCanvas } from './canvasContext.js';
 export class CanvasViewModel {
 	canvas = getCanvas();
 	private selectedSvgElements: Map<Shape, SVGElement> = new Map();
+
 	hoveredShape = $state<Shape | null>(null);
+	hoverOnTrace = $state(false);
+	draggedShape = $state<Shape | null>(null);
 
 	addToSelection(shape: Shape, element: SVGGraphicsElement, clear: boolean = false) {
 		if (clear) {

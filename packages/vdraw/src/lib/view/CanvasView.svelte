@@ -7,10 +7,6 @@
 
 	const viewModel = new CanvasViewModel();
 	const canvas = viewModel.canvas;
-
-	let draggedShape = $state<Shape | null>(null);
-
-	let onTrace = $state(false);
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -47,7 +43,7 @@
 			onmousedown={(e: MouseEvent) => {
 				e.stopPropagation();
 				viewModel.addToSelection(shape, e.target as SVGGraphicsElement, !e.shiftKey);
-				draggedShape = shape;
+				viewModel.draggedShape = shape;
 			}}
 			onmouseenter={() => {
 				viewModel.hoveredShape = shape;
@@ -55,7 +51,7 @@
 			onmouseleave={() => {
 				// force the code to run after mouse enter on the trace
 				setTimeout(() => {
-					if (!onTrace && viewModel.hoveredShape === shape) {
+					if (!viewModel.hoverOnTrace && viewModel.hoveredShape === shape) {
 						viewModel.hoveredShape = null;
 					}
 				});
@@ -74,13 +70,13 @@
 					e.target as SVGGraphicsElement,
 					!e.shiftKey
 				);
-				draggedShape = viewModel.hoveredShape;
+				viewModel.draggedShape = viewModel.hoveredShape;
 			}}
 			onmouseenter={() => {
-				onTrace = true;
+				viewModel.hoverOnTrace = true;
 			}}
 			onmouseleave={() => {
-				onTrace = false;
+				viewModel.hoverOnTrace = false;
 			}}
 		/>
 	{/if}
@@ -93,14 +89,14 @@
 
 <svelte:window
 	onmousemove={(event) => {
-		if (draggedShape) {
+		if (viewModel.draggedShape) {
 			canvas.selected.forEach((shape) => {
 				shape.x += event.movementX;
 				shape.y += event.movementY;
 			});
 		}
 	}}
-	onmouseup={() => (draggedShape = null)}
+	onmouseup={() => (viewModel.draggedShape = null)}
 />
 
 <style>
