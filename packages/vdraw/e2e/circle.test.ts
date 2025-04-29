@@ -11,5 +11,5 @@ test('circle - create', async ({ page }) => {
 	// add one circle
 	await page.click('button[aria-label="Circle Tool"]');
 	await canvas.click();
-	await expect(canvas.locator('circle')).toBeVisible();
+	await expect(canvas.locator('circle:not(.overlay,.trace)')).toBeVisible();
 });

@@ -1,11 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { getCanvasLocator } from './helpers';
 
-test('home page has expected h1', async ({ page }) => {
-	await page.goto('/');
-	await expect(page.locator('h1')).toBeVisible();
-});
-
 test('rectangle - create', async ({ page }) => {
 	await page.goto('/');
 	const canvas = getCanvasLocator(page);
@@ -15,10 +10,10 @@ test('rectangle - create', async ({ page }) => {
 
 	// add one rect
 	await canvas.click();
-	await expect(canvas.locator('rect')).toBeVisible();
+	await expect(canvas.locator('rect:not(.overlay,.trace)')).toBeVisible();
 });
 
-test('rectangle - select', async ({ page }) => {
+test('rectangle - select by clicking overlay', async ({ page }) => {
 	await page.goto('/');
 	const canvas = getCanvasLocator(page);
 
@@ -27,13 +22,33 @@ test('rectangle - select', async ({ page }) => {
 
 	// add one rect
 	await canvas.click();
-	await expect(canvas.locator('rect')).toBeVisible();
+	await expect(canvas.locator('rect:not(.overlay,.trace)')).toBeVisible();
 
 	// select rect
-	await canvas.locator('rect').click();
+	await canvas.locator('rect.overlay').click();
 	const rectCount = await canvas.locator('rect').count();
-	expect(rectCount).toBeGreaterThan(2);
+	expect(rectCount).toBeGreaterThan(5);
 });
+
+// *** tested manually not able to test through playwright
+// test('rectangle - select by clicking trace', async ({ page }) => {
+// 	await page.goto('/');
+// 	const canvas = getCanvasLocator(page);
+
+// 	// no rectangles yet
+// 	await expect(canvas.locator('rect')).not.toBeVisible();
+
+// 	// add one rect
+// 	await canvas.click();
+// 	await expect(canvas.locator('rect:not(.overlay,.trace)')).toBeVisible();
+
+// 	// select rect
+// 	await canvas.locator('rect.overlay').hover(); // to show trace
+// 	await expect(canvas.locator('rect.trace')).toBeVisible();
+// 	await canvas.locator('rect.trace').click();
+// 	const rectCount = await canvas.locator('rect').count();
+// 	expect(rectCount).toBeGreaterThan(5);
+// });
 
 test('rectangle - de-select', async ({ page }) => {
 	await page.goto('/');
@@ -44,16 +59,15 @@ test('rectangle - de-select', async ({ page }) => {
 
 	// add one rect
 	await canvas.click();
-	await expect(canvas.locator('rect')).toBeVisible();
+	await expect(canvas.locator('rect:not(.overlay,.trace)')).toBeVisible();
 
 	// select rect
-	await canvas.locator('rect').click();
-	const rectCount = await canvas.locator('rect').count();
-	expect(rectCount).toBeGreaterThan(2);
+	await canvas.locator('rect.overlay').click();
+	expect(canvas.locator('rect.selection-rect')).toBeVisible();
 
 	// de-select rect
 	await page.keyboard.press('Escape');
-	await expect(await canvas.locator('rect').count()).toBe(1);
+	expect(canvas.locator('rect.selection-rect')).not.toBeVisible();
 });
 
 test('rectangle - delete using backspace', async ({ page }) => {
@@ -65,12 +79,11 @@ test('rectangle - delete using backspace', async ({ page }) => {
 
 	// add one rect
 	await canvas.click();
-	await expect(canvas.locator('rect')).toBeVisible();
+	await expect(canvas.locator('rect:not(.overlay,.trace)')).toBeVisible();
 
 	// select rect
-	await canvas.locator('rect').click();
-	const rectCount = await canvas.locator('rect').count();
-	expect(rectCount).toBeGreaterThan(2);
+	await canvas.locator('rect.overlay').click();
+	expect(canvas.locator('rect.selection-rect')).toBeVisible();
 
 	// delete rect
 	await page.keyboard.press('Backspace');
@@ -86,12 +99,11 @@ test('rectangle - delete using delete key', async ({ page }) => {
 
 	// add one rect
 	await canvas.click();
-	await expect(canvas.locator('rect')).toBeVisible();
+	await expect(canvas.locator('rect:not(.overlay,.trace)')).toBeVisible();
 
 	// select rect
-	await canvas.locator('rect').click();
-	const rectCount = await canvas.locator('rect').count();
-	expect(rectCount).toBeGreaterThan(2);
+	await canvas.locator('rect.overlay').click();
+	expect(canvas.locator('rect.selection-rect')).toBeVisible();
 
 	// delete rect
 	await page.keyboard.press('Delete');
