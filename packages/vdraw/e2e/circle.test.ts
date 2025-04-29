@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { getCanvasLocator } from './helpers';
+import { getCanvasLocator, selectCircleTool } from './helpers';
 
 test('circle - create', async ({ page }) => {
 	await page.goto('/');
@@ -9,7 +9,7 @@ test('circle - create', async ({ page }) => {
 	await expect(canvas.locator('circle')).not.toBeVisible();
 
 	// add one circle
-	await page.click('button[aria-label="Circle Tool"]');
+	await selectCircleTool(page);
 	await canvas.click();
 	await expect(canvas.locator('circle:not(.overlay,.trace)')).toBeVisible();
 });

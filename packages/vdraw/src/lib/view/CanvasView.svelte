@@ -90,6 +90,7 @@
 					if (!onTrace && hoveredShape === shape) {
 						hoveredShape = null;
 					}
+					//TODO: remove all logging
 					console.log('timeout from onmouseleave for shape');
 				});
 			}}
