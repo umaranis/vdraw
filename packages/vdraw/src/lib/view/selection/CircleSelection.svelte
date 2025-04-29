@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { CircleType } from '../../model/shapes/Circle.js';
-	import { getSvgElement } from '../canvasContext.js';
 	import CircleStrokeTrace from './CircleStrokeTrace.svelte';
 	import SelectionDecoratorRect from './SelectionDecoratorRect.svelte';
 

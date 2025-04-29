@@ -32,11 +32,17 @@
 	y={r.y}
 	width={r.width}
 	height={r.height}
-	stroke-width="20"
-	stroke-opacity="0"
-	stroke="black"
+	class="overlay"
 	fill={r.fill}
 	{onmousedown}
 	{onmouseenter}
 	{onmouseleave}
 />
+
+<style>
+	.overlay {
+		stroke-width: 20px;
+		stroke: black;
+		stroke-opacity: 0;
+	}
+</style>

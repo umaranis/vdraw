@@ -29,6 +29,8 @@
 
 	let draggedShape = $state<Shape | null>(null);
 	let hoveredShape = $state<Shape | null>(null);
+	let onTrace = $state(false);
+	$inspect(hoveredShape);
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -54,11 +56,16 @@
 			case 'Backspace':
 				// Remove selected shapes in place
 				for (let i = canvas.shapes.length - 1; i >= 0; i--) {
-					if (canvas.selected.has(canvas.shapes[i])) {
+					const shape = canvas.shapes[i];
+					if (canvas.selected.has(shape)) {
 						canvas.shapes.splice(i, 1);
+						if (shape === hoveredShape) {
+							hoveredShape = null;
+						}
 					}
 				}
 				clearSelection();
+
 				break;
 		}
 	}}
@@ -73,14 +80,40 @@
 				addToSelection(shape, e.target as SVGGraphicsElement, !e.shiftKey);
 				draggedShape = shape;
 			}}
-			onmouseenter={() => (hoveredShape = shape)}
-			onmouseleave={() => (hoveredShape = null)}
+			onmouseenter={() => {
+				hoveredShape = shape;
+				console.log('onmouseenter for shape');
+			}}
+			onmouseleave={() => {
+				console.log('onmouseleave for shape');
+				setTimeout(() => {
+					if (!onTrace && hoveredShape === shape) {
+						hoveredShape = null;
+					}
+					console.log('timeout from onmouseleave for shape');
+				});
+			}}
 		/>
 	{/each}
 
 	{#if hoveredShape}
 		{@const StrokeTraceComponent = mapModelView[hoveredShape.type].strokeTrace}
-		<StrokeTraceComponent shape={hoveredShape} />
+		<StrokeTraceComponent
+			shape={hoveredShape}
+			onmousedown={(e: MouseEvent) => {
+				e.stopPropagation();
+				addToSelection(hoveredShape!, e.target as SVGGraphicsElement, !e.shiftKey);
+				draggedShape = hoveredShape;
+			}}
+			onmouseenter={() => {
+				onTrace = true;
+				console.log('onmouseenter on trace');
+			}}
+			onmouseleave={() => {
+				onTrace = false;
+				console.log('onmouseleave on trace');
+			}}
+		/>
 	{/if}
 
 	{#each canvas.selected as shape (shape)}

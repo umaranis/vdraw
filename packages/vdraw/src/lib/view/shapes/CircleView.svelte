@@ -31,11 +31,17 @@
 	cx={c.x}
 	cy={c.y}
 	r={c.radius}
-	stroke-width="20"
-	stroke-opacity="0"
-	stroke="black"
+	class="overlay"
 	fill={c.fill}
 	{onmousedown}
 	{onmouseenter}
 	{onmouseleave}
 />
+
+<style>
+	.overlay {
+		stroke-width: 20px;
+		stroke: black;
+		stroke-opacity: 0;
+	}
+</style>
