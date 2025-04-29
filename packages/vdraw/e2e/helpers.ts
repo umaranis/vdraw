@@ -11,3 +11,7 @@ export function selectRectangleTool(page: Page) {
 export function selectCircleTool(page: Page) {
 	return page.click('button[aria-label="Circle Tool"]');
 }
+
+export function selectTool(page: Page, tool: 'rect' | 'circle') {
+	return tool === 'rect' ? selectRectangleTool(page) : selectCircleTool(page);
+}

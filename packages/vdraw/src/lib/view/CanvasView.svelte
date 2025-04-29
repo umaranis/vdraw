@@ -51,7 +51,6 @@
 			}}
 			onmouseenter={() => {
 				viewModel.hoveredShape = shape;
-				console.log('onmouseenter for shape');
 			}}
 			onmouseleave={() => {
 				// force the code to run after mouse enter on the trace
