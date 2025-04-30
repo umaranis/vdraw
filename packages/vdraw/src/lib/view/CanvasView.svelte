@@ -8,11 +8,25 @@
 	const viewModel = new CanvasViewModel();
 	const canvas = viewModel.canvas;
 
+	/**
+	 * `onmousemove` is at times called wwithout any real change in the mouse position.
+	 * This is a workaround to avoid going into dragging mode.
+	 */
+	let dragStartCoords = $state<{ x: number; y: number } | null>(null);
+	let hasDragged = $state(false);
+	let grabbedSelectedShape = $state<Shape | null>(null);
+
 	function mouseDownOnShape(e: MouseEvent, shape: Shape) {
 		e.stopPropagation();
-		viewModel.addToSelection(shape, e.target as SVGGraphicsElement, !e.shiftKey);
+		if (viewModel.isShapeSelected(shape)) {
+			grabbedSelectedShape = shape;
+		} else {
+			viewModel.addToSelection(shape, e.target as SVGGraphicsElement, !e.shiftKey);
+		}
 		viewModel.draggedShape = shape;
+		dragStartCoords = { x: e.clientX, y: e.clientY };
 	}
+	$inspect(hasDragged);
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -78,13 +92,33 @@
 <svelte:window
 	onmousemove={(event) => {
 		if (viewModel.draggedShape) {
-			canvas.selected.forEach((shape) => {
-				shape.x += event.movementX;
-				shape.y += event.movementY;
-			});
+			if (
+				hasDragged ||
+				(dragStartCoords &&
+					(Math.abs(dragStartCoords.x - event.clientX) > 1 ||
+						Math.abs(dragStartCoords.y - event.clientY) > 1))
+			) {
+				canvas.selected.forEach((shape) => {
+					shape.x += event.movementX;
+					shape.y += event.movementY;
+				});
+				hasDragged = true;
+			}
 		}
 	}}
-	onmouseup={() => (viewModel.draggedShape = null)}
+	onmouseup={(e: MouseEvent) => {
+		if (grabbedSelectedShape && !hasDragged) {
+			if (e.shiftKey) {
+				viewModel.removeFromSelection(grabbedSelectedShape);
+			} else {
+				viewModel.addToSelection(grabbedSelectedShape, e.target as SVGGraphicsElement, true);
+			}
+		}
+		viewModel.draggedShape = null;
+		hasDragged = false;
+		grabbedSelectedShape = null;
+		dragStartCoords = null;
+	}}
 />
 
 <style>

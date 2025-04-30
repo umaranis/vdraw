@@ -21,6 +21,10 @@ export class CanvasViewModel {
 		return this.canvas.selected.size !== 0;
 	}
 
+	isShapeSelected(shape: Shape) {
+		return this.canvas.selected.has(shape);
+	}
+
 	removeFromSelection(shape: Shape) {
 		this.canvas.selected.delete(shape);
 		this.selectedSvgElements.delete(shape);
