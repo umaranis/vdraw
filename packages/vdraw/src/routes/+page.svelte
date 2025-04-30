@@ -8,7 +8,7 @@
 	setCanvas(canvas);
 </script>
 
-<h1>Welcome to vDraw</h1>
+<h1>Welcome to vdraw</h1>
 <p>Create your package using @sveltejs/package and preview/showcase your work with SvelteKit</p>
 
 <ToolPaletteView />

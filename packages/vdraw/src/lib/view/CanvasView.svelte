@@ -7,6 +7,12 @@
 
 	const viewModel = new CanvasViewModel();
 	const canvas = viewModel.canvas;
+
+	function mouseDownOnShape(e: MouseEvent, shape: Shape) {
+		e.stopPropagation();
+		viewModel.addToSelection(shape, e.target as SVGGraphicsElement, !e.shiftKey);
+		viewModel.draggedShape = shape;
+	}
 </script>
 
 <!-- svelte-ignore a11y_no_static_element_interactions -->
@@ -40,14 +46,8 @@
 		{@const ShapeComponent = mapModelView[shape.type].component}
 		<ShapeComponent
 			{shape}
-			onmousedown={(e: MouseEvent) => {
-				e.stopPropagation();
-				viewModel.addToSelection(shape, e.target as SVGGraphicsElement, !e.shiftKey);
-				viewModel.draggedShape = shape;
-			}}
-			onmouseenter={() => {
-				viewModel.hoveredShape = shape;
-			}}
+			onmousedown={(e: MouseEvent) => mouseDownOnShape(e, shape)}
+			onmouseenter={() => (viewModel.hoveredShape = shape)}
 			onmouseleave={() => {
 				// force the code to run after mouse enter on the trace
 				setTimeout(() => {
@@ -63,21 +63,9 @@
 		{@const StrokeTraceComponent = mapModelView[viewModel.hoveredShape.type].strokeTrace}
 		<StrokeTraceComponent
 			shape={viewModel.hoveredShape}
-			onmousedown={(e: MouseEvent) => {
-				e.stopPropagation();
-				viewModel.addToSelection(
-					viewModel.hoveredShape!,
-					e.target as SVGGraphicsElement,
-					!e.shiftKey
-				);
-				viewModel.draggedShape = viewModel.hoveredShape;
-			}}
-			onmouseenter={() => {
-				viewModel.hoverOnTrace = true;
-			}}
-			onmouseleave={() => {
-				viewModel.hoverOnTrace = false;
-			}}
+			onmousedown={(e: MouseEvent) => mouseDownOnShape(e, viewModel.hoveredShape!)}
+			onmouseenter={() => (viewModel.hoverOnTrace = true)}
+			onmouseleave={() => (viewModel.hoverOnTrace = false)}
 		/>
 	{/if}
 
