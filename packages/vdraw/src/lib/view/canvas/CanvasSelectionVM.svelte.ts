@@ -1,7 +1,10 @@
 import type { Shape } from '$lib/model/shapes/Shape.js';
-import { getCanvas } from './canvasContext.js';
+import { getCanvas } from '../canvasContext.js';
 
-export class CanvasViewModel {
+/**
+ * Canvas Selection View Model
+ */
+export class CanvasSelectionVM {
 	canvas = getCanvas();
 	private selectedSvgElements: Map<Shape, SVGElement> = new Map();
 

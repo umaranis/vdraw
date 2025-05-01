@@ -1,11 +1,12 @@
 <script lang="ts">
 	import type { Shape } from '$lib/model/shapes/Shape.js';
-	import { createModelViewMap } from '$lib/view/modelViewMap.js';
-	import { CanvasViewModel } from './CanvasViewModel.svelte.js';
+	import { createModelViewMap } from '../modelViewMap.js';
+	import { CanvasSelectionVM } from './CanvasSelectionVM.svelte.js';
+	import SvgContainer from './SvgContainer.svelte';
 
 	const mapModelView = createModelViewMap();
 
-	const viewModel = new CanvasViewModel();
+	const viewModel = new CanvasSelectionVM();
 	const canvas = viewModel.canvas;
 
 	/**
@@ -26,25 +27,18 @@
 		viewModel.draggedShape = shape;
 		dragStartCoords = { x: e.clientX, y: e.clientY };
 	}
-	$inspect(hasDragged);
 </script>
 
-<!-- svelte-ignore a11y_no_static_element_interactions -->
-<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-<svg
-	xmlns="http://www.w3.org/2000/svg"
-	width="100%"
-	height="80vh"
-	preserveAspectRatio="none"
-	onmousedown={(event) => {
+<SvgContainer
+	onmousedown={(e: MouseEvent) => {
 		if (viewModel.hasSelection()) {
 			viewModel.clearSelection();
 		} else {
-			canvas.toolPalette.currentTool.onclick(event, canvas);
+			canvas.toolPalette.currentTool.onclick(e, canvas);
 		}
 	}}
-	onkeydown={(event) => {
-		switch (event.key) {
+	onkeydown={(e: KeyboardEvent) => {
+		switch (e.key) {
 			case 'Escape':
 				viewModel.clearSelection();
 				break;
@@ -54,7 +48,6 @@
 				break;
 		}
 	}}
-	tabindex="0"
 >
 	{#each canvas.shapes as shape (shape)}
 		{@const ShapeComponent = mapModelView[shape.type].component}
@@ -87,7 +80,7 @@
 		{@const SelectionComponent = mapModelView[shape.type].selection}
 		<SelectionComponent {shape} element={viewModel.getSelectedSvgElement(shape)} />
 	{/each}
-</svg>
+</SvgContainer>
 
 <svelte:window
 	onmousemove={(event) => {
@@ -120,10 +113,3 @@
 		dragStartCoords = null;
 	}}
 />
-
-<style>
-	svg {
-		border: 1px solid black;
-		--selection-color: #3182ed;
-	}
-</style>
