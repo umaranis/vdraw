@@ -16,7 +16,7 @@ const config = {
 
 	// Enable Runes mode by default
 	compilerOptions: {
-		runes: true
+		// runes: true
 	}
 };
 

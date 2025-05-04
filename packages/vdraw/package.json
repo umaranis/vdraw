@@ -13,7 +13,9 @@
 		"lint": "prettier --check . && eslint .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run && npm run test:e2e",
-		"test:e2e": "playwright test"
+		"test:e2e": "playwright test",
+		"storybook": "storybook dev -p 6006",
+		"build-storybook": "storybook build"
 	},
 	"files": [
 		"dist",
@@ -36,23 +38,36 @@
 		"svelte": "^5.0.0"
 	},
 	"devDependencies": {
+		"@chromatic-com/storybook": "^3",
 		"@eslint/compat": "^1.2.5",
 		"@eslint/js": "^9.18.0",
 		"@playwright/test": "^1.49.1",
+		"@storybook/addon-essentials": "^8.6.12",
+		"@storybook/addon-svelte-csf": "^5.0.0-next.0",
+		"@storybook/blocks": "^8.6.12",
+		"@storybook/experimental-addon-test": "^8.6.12",
+		"@storybook/svelte": "^8.6.12",
+		"@storybook/sveltekit": "^8.6.12",
+		"@storybook/test": "^8.6.12",
 		"@sveltejs/adapter-auto": "^4.0.0",
 		"@sveltejs/kit": "^2.16.0",
 		"@sveltejs/package": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^5.0.0",
 		"@testing-library/jest-dom": "^6.6.3",
 		"@testing-library/svelte": "^5.2.4",
+		"@vitest/browser": "3.1.2",
+		"@vitest/coverage-v8": "3.1.2",
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
+		"eslint-plugin-storybook": "^0.12.0",
 		"eslint-plugin-svelte": "^3.0.0",
 		"globals": "^16.0.0",
 		"jsdom": "^26.0.0",
+		"playwright": "^1.52.0",
 		"prettier": "^3.4.2",
 		"prettier-plugin-svelte": "^3.3.3",
 		"publint": "^0.3.2",
+		"storybook": "^8.6.12",
 		"svelte": "^5.0.0",
 		"svelte-check": "^4.0.0",
 		"typescript": "^5.0.0",
@@ -66,6 +81,11 @@
 	"pnpm": {
 		"onlyBuiltDependencies": [
 			"esbuild"
+		]
+	},
+	"eslintConfig": {
+		"extends": [
+			"plugin:storybook/recommended"
 		]
 	}
 }
