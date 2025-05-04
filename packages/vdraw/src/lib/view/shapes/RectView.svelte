@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { RectangleType } from '../../model/shapes/Rectangle.js';
-	import RectStrokeTrace from '../selection/RectStrokeTrace.svelte';
 
 	let {
 		shape: r,

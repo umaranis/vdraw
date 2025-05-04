@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { getCanvas } from '../canvasContext.js';
+	import type { ToolPalette } from '$lib/model/tools/ToolPalette.js';
 
-	const toolPalette = getCanvas().toolPalette;
+	let { toolPalette }: { toolPalette: ToolPalette } = $props();
 </script>
 
 <button

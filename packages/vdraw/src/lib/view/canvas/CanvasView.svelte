@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Canvas } from '$lib/model/Canvas.js';
 	import type { Shape } from '$lib/model/shapes/Shape.js';
 	import { createModelViewMap } from '../modelViewMap.js';
 	import { CanvasSelectionVM } from './CanvasSelectionVM.svelte.js';
@@ -6,8 +7,8 @@
 
 	const mapModelView = createModelViewMap();
 
-	const viewModel = new CanvasSelectionVM();
-	const canvas = viewModel.canvas;
+	let { canvas }: { canvas: Canvas } = $props();
+	const viewModel = new CanvasSelectionVM(canvas);
 
 	/**
 	 * `onmousemove` is at times called wwithout any real change in the mouse position.
