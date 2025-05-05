@@ -10,4 +10,24 @@
 <p>Create your package using @sveltejs/package and preview/showcase your work with SvelteKit</p>
 
 <ToolPaletteView toolPalette={canvas.toolPalette} />
-<CanvasView {canvas} />
+<div class="canvas-container-parent">
+	<div class="canvas-container">
+		<CanvasView {canvas} />
+	</div>
+</div>
+
+<style>
+	.canvas-container-parent {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 80vh;
+	}
+	.canvas-container {
+		border: 1px solid black;
+		width: 80%;
+		height: 100%;
+		overflow: hidden;
+	}
+</style>
