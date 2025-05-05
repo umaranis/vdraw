@@ -31,6 +31,7 @@
 </script>
 
 <SvgContainer
+	viewBox={canvas.viewBox}
 	onmousedown={(e: MouseEvent) => {
 		if (viewModel.hasSelection()) {
 			viewModel.clearSelection();
