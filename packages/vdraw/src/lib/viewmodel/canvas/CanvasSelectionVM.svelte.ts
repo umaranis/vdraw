@@ -1,21 +1,24 @@
 import type { Canvas } from '$lib/model/Canvas.js';
 import type { Shape } from '$lib/model/shapes/Shape.js';
-//import { getCanvas } from '../canvasContext.js';
+
+export type CanvasViewModel = CanvasSelectionVM;
 
 /**
  * Canvas Selection View Model
  */
 export class CanvasSelectionVM {
 	canvas;
-	constructor(canvas: Canvas) {
-		this.canvas = canvas;
-	}
 	private selectedSvgElements: Map<Shape, SVGElement> = new Map();
 
 	hoveredShape = $state<Shape | null>(null);
 	hoverOnTrace = $state(false);
 	draggedShape = $state<Shape | null>(null);
 
+	svgContainerRef: SVGSVGElement | null = null;
+
+	constructor(canvas: Canvas) {
+		this.canvas = canvas;
+	}
 	addToSelection(shape: Shape, element: SVGGraphicsElement, clear: boolean = false) {
 		if (clear) {
 			this.clearSelection();
@@ -57,5 +60,9 @@ export class CanvasSelectionVM {
 			}
 		}
 		this.clearSelection();
+	}
+
+	focus() {
+		this.svgContainerRef?.focus();
 	}
 }

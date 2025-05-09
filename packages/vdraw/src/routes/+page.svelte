@@ -2,17 +2,19 @@
 	import { createCanvas } from '$lib/model/Canvas.js';
 	import CanvasView from '$lib/view/canvas/CanvasView.svelte';
 	import ToolPaletteView from '$lib/view/tools/ToolPaletteView.svelte';
+	import { CanvasSelectionVM } from '$lib/viewmodel/canvas/CanvasSelectionVM.svelte.js';
 
 	const canvas = $state(createCanvas());
+	const canvasVM = new CanvasSelectionVM(canvas);
 </script>
 
 <h1>Welcome to vdraw</h1>
 <p>Create your package using @sveltejs/package and preview/showcase your work with SvelteKit</p>
 
-<ToolPaletteView toolPalette={canvas.toolPalette} />
+<ToolPaletteView {canvasVM} />
 <div class="canvas-container-parent">
 	<div class="canvas-container">
-		<CanvasView {canvas} />
+		<CanvasView {canvasVM} />
 	</div>
 </div>
 

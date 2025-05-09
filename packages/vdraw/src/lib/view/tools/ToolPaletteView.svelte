@@ -1,16 +1,16 @@
 <script lang="ts">
 	import RectangleToolView from './RectangleToolView.svelte';
 	import CircleToolView from './CircleToolView.svelte';
-	import type { ToolPalette } from '$lib/viewmodel/tools/ToolPalette.js';
+	import type { CanvasViewModel } from '$lib/viewmodel/canvas/CanvasSelectionVM.svelte.js';
 	import SelectionToolView from './SelectionToolView.svelte';
 
-	let { toolPalette }: { toolPalette: ToolPalette } = $props();
+	let { canvasVM }: { canvasVM: CanvasViewModel } = $props();
 </script>
 
 <div class="tool-palette">
-	<SelectionToolView {toolPalette} />
-	<RectangleToolView {toolPalette} />
-	<CircleToolView {toolPalette} />
+	<SelectionToolView {canvasVM} />
+	<RectangleToolView {canvasVM} />
+	<CircleToolView {canvasVM} />
 </div>
 
 <style>

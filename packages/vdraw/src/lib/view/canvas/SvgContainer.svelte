@@ -4,10 +4,12 @@
 	let {
 		viewBox,
 		children,
+		svgContainerRef = $bindable<SVGSVGElement | null>(),
 		...rest
 	}: {
 		viewBox: { x: number; y: number; zoom: number };
 		children: Snippet;
+		svgContainerRef: SVGSVGElement | null;
 		onmousedown: (e: MouseEvent) => void;
 		onkeydown: (e: KeyboardEvent) => void;
 	} = $props();
@@ -39,6 +41,7 @@
 
 <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
 <svg
+	bind:this={svgContainerRef}
 	xmlns="http://www.w3.org/2000/svg"
 	viewBox="{viewBox.x} {viewBox.y} {width} {height}"
 	tabindex="0"

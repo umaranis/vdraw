@@ -1,13 +1,15 @@
 <script lang="ts">
-	import type { ToolPalette } from '$lib/viewmodel/tools/ToolPalette.js';
+	import type { CanvasViewModel } from '$lib/viewmodel/canvas/CanvasSelectionVM.svelte.js';
 
-	let { toolPalette }: { toolPalette: ToolPalette } = $props();
+	let { canvasVM }: { canvasVM: CanvasViewModel } = $props();
+	const toolPalette = canvasVM.canvas.toolPalette;
 </script>
 
 <button
 	class="tool-button {toolPalette.currentTool === toolPalette.tools.rectTool ? 'active' : ''}"
 	onclick={() => {
 		toolPalette.currentTool = toolPalette.tools.rectTool;
+		canvasVM.focus();
 	}}
 	aria-label="Rectangle Tool"
 >

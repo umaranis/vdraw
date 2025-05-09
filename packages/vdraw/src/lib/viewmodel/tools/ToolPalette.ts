@@ -10,6 +10,7 @@ export interface ToolPalette {
 		rectTool: RectangleTool;
 		circleTool: CircleTool;
 	};
+	switchToDefault(): void;
 }
 
 export function createToolPalette(): ToolPalette {
@@ -20,6 +21,9 @@ export function createToolPalette(): ToolPalette {
 			selectionTool: selectionTool,
 			rectTool: new RectangleTool(),
 			circleTool: new CircleTool()
+		},
+		switchToDefault() {
+			this.currentTool = this.tools.selectionTool;
 		}
 	};
 }
