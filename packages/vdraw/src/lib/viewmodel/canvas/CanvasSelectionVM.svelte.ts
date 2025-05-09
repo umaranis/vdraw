@@ -9,7 +9,7 @@ export type CanvasViewModel = CanvasSelectionVM;
  */
 export class CanvasSelectionVM {
 	canvas;
-	toolPalette;
+	toolPalette = $state(createToolPalette());
 	private selectedSvgElements: Map<Shape, SVGElement> = new Map();
 
 	hoveredShape = $state<Shape | null>(null);
@@ -20,7 +20,6 @@ export class CanvasSelectionVM {
 
 	constructor(canvas: Canvas) {
 		this.canvas = canvas;
-		this.toolPalette = createToolPalette();
 	}
 
 	addToSelection(shape: Shape, element: SVGGraphicsElement, clear: boolean = false) {

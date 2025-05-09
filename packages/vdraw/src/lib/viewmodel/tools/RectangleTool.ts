@@ -15,5 +15,6 @@ export class RectangleTool implements Tool {
 			strokeWidth: 8
 		};
 		canvasVM.canvas.shapes.push(rect);
+		canvasVM.toolPalette.switchToDefault();
 	}
 }
