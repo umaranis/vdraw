@@ -33,12 +33,12 @@
 	viewBox={canvas.viewBox}
 	bind:svgContainerRef={canvasVM.svgContainerRef}
 	onmousedown={(e: MouseEvent) => {
-		canvas.toolPalette.currentTool.onmousedown(e, canvasVM);
+		canvasVM.toolPalette.currentTool.onmousedown(e, canvasVM);
 	}}
 	onkeydown={(e: KeyboardEvent) => {
 		switch (e.key) {
 			case 'Escape':
-				canvas.toolPalette.switchToDefault();
+				canvasVM.toolPalette.switchToDefault();
 				canvasVM.clearSelection();
 				break;
 			case 'Delete':

@@ -2,7 +2,7 @@
 	import type { CanvasViewModel } from '$lib/viewmodel/canvas/CanvasSelectionVM.svelte.js';
 
 	let { canvasVM }: { canvasVM: CanvasViewModel } = $props();
-	const toolPalette = canvasVM.canvas.toolPalette;
+	const toolPalette = canvasVM.toolPalette;
 </script>
 
 <button

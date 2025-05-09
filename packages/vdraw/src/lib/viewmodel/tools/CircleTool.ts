@@ -14,6 +14,6 @@ export class CircleTool implements Tool {
 			strokeWidth: 8
 		};
 		canvasVM.canvas.shapes.push(circle);
-		canvasVM.canvas.toolPalette.switchToDefault();
+		canvasVM.toolPalette.switchToDefault();
 	}
 }
