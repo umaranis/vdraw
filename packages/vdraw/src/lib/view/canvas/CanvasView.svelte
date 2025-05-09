@@ -2,7 +2,7 @@
 	import type { Canvas } from '$lib/model/Canvas.js';
 	import type { Shape } from '$lib/model/shapes/Shape.js';
 	import { createModelViewMap } from '../modelViewMap.js';
-	import { CanvasSelectionVM } from './CanvasSelectionVM.svelte.js';
+	import { CanvasSelectionVM } from '../../viewmodel/canvas/CanvasSelectionVM.svelte.js';
 	import SvgContainer from './SvgContainer.svelte';
 
 	const mapModelView = createModelViewMap();
@@ -11,7 +11,7 @@
 	const viewModel = new CanvasSelectionVM(canvas);
 
 	/**
-	 * `onmousemove` is at times called wwithout any real change in the mouse position.
+	 * `onmousemove` is at times called without any real change in the mouse position.
 	 * This is a workaround to avoid going into dragging mode.
 	 */
 	let dragStartCoords = $state<{ x: number; y: number } | null>(null);
@@ -33,11 +33,7 @@
 <SvgContainer
 	viewBox={canvas.viewBox}
 	onmousedown={(e: MouseEvent) => {
-		if (viewModel.hasSelection()) {
-			viewModel.clearSelection();
-		} else {
-			canvas.toolPalette.currentTool.onclick(e, canvas);
-		}
+		canvas.toolPalette.currentTool.onmousedown(e, viewModel);
 	}}
 	onkeydown={(e: KeyboardEvent) => {
 		switch (e.key) {

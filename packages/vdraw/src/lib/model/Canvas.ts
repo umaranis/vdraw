@@ -1,5 +1,5 @@
 import type { Shape } from '$lib/model/shapes/Shape.js';
-import { createToolPalette, type ToolPalette } from '$lib/model/tools/ToolPalette.js';
+import { createToolPalette, type ToolPalette } from '$lib/viewmodel/tools/ToolPalette.js';
 import { SvelteSet } from 'svelte/reactivity';
 
 export interface Canvas {

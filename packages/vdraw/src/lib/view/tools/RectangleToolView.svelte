@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { ToolPalette } from '$lib/model/tools/ToolPalette.js';
+	import type { ToolPalette } from '$lib/viewmodel/tools/ToolPalette.js';
 
 	let { toolPalette }: { toolPalette: ToolPalette } = $props();
 </script>
