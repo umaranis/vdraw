@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CanvasViewModel } from '$lib/viewmodel/canvas/CanvasSelectionVM.svelte.js';
+	import type { CanvasViewModel } from '$lib/viewmodel/canvas/CanvasVM.svelte.js';
 
 	let { canvasVM }: { canvasVM: CanvasViewModel } = $props();
 	const toolPalette = canvasVM.toolPalette;

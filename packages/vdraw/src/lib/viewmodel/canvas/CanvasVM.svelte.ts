@@ -2,12 +2,10 @@ import type { Canvas } from '$lib/model/Canvas.js';
 import type { Shape } from '$lib/model/shapes/Shape.js';
 import { createToolPalette } from '$lib/viewmodel/tools/ToolPalette.js';
 
-export type CanvasViewModel = CanvasSelectionVM;
-
 /**
  * Canvas Selection View Model
  */
-export class CanvasSelectionVM {
+export class CanvasViewModel {
 	canvas;
 	toolPalette = $state(createToolPalette());
 	private selectedSvgElements: Map<Shape, SVGElement> = new Map();

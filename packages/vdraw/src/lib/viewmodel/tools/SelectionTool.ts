@@ -1,8 +1,8 @@
 import type { Tool } from './Tool.js';
-import type { CanvasSelectionVM } from '../canvas/CanvasSelectionVM.svelte.js';
+import type { CanvasViewModel } from '../canvas/CanvasVM.svelte.js';
 
 export class SelectionTool implements Tool {
-	onmousedown(e: MouseEvent, canvasVM: CanvasSelectionVM): void {
+	onmousedown(e: MouseEvent, canvasVM: CanvasViewModel): void {
 		canvasVM.clearSelection();
 	}
 }

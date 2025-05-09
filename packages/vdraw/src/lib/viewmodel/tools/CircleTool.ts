@@ -1,8 +1,8 @@
-import type { CanvasSelectionVM } from '../canvas/CanvasSelectionVM.svelte.js';
+import type { CanvasViewModel } from '../canvas/CanvasVM.svelte.js';
 import type { Tool } from './Tool.js';
 
 export class CircleTool implements Tool {
-	onmousedown(e: MouseEvent, canvasVM: CanvasSelectionVM) {
+	onmousedown(e: MouseEvent, canvasVM: CanvasViewModel) {
 		const circle = {
 			type: 'circle',
 			selected: false,

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import RectangleToolView from './RectangleToolView.svelte';
 	import CircleToolView from './CircleToolView.svelte';
-	import type { CanvasViewModel } from '$lib/viewmodel/canvas/CanvasSelectionVM.svelte.js';
+	import type { CanvasViewModel } from '$lib/viewmodel/canvas/CanvasVM.svelte.js';
 	import SelectionToolView from './SelectionToolView.svelte';
 
 	let { canvasVM }: { canvasVM: CanvasViewModel } = $props();

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Shape } from '$lib/model/shapes/Shape.js';
 	import { createModelViewMap } from '../modelViewMap.js';
-	import type { CanvasViewModel } from '$lib/viewmodel/canvas/CanvasSelectionVM.svelte.js';
+	import type { CanvasViewModel } from '$lib/viewmodel/canvas/CanvasVM.svelte.js';
 	import SvgContainer from './SvgContainer.svelte';
 
 	const mapModelView = createModelViewMap();

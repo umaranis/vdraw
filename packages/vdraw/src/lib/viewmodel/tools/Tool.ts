@@ -1,5 +1,5 @@
-import { CanvasSelectionVM } from '../canvas/CanvasSelectionVM.svelte';
+import { CanvasViewModel } from '../canvas/CanvasVM.svelte.js';
 
 export interface Tool {
-	onmousedown(e: MouseEvent, canvasVM: CanvasSelectionVM): void;
+	onmousedown(e: MouseEvent, canvasVM: CanvasViewModel): void;
 }

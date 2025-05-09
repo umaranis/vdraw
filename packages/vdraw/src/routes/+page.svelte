@@ -2,10 +2,10 @@
 	import { createCanvas } from '$lib/model/Canvas.js';
 	import CanvasView from '$lib/view/canvas/CanvasView.svelte';
 	import ToolPaletteView from '$lib/view/tools/ToolPaletteView.svelte';
-	import { CanvasSelectionVM } from '$lib/viewmodel/canvas/CanvasSelectionVM.svelte.js';
+	import { CanvasViewModel } from '$lib/viewmodel/canvas/CanvasVM.svelte.js';
 
 	const canvas = $state(createCanvas());
-	const canvasVM = new CanvasSelectionVM(canvas);
+	const canvasVM = new CanvasViewModel(canvas);
 </script>
 
 <h1>Welcome to vdraw</h1>
