@@ -25,7 +25,7 @@
 		const isZoom = e.ctrlKey || e.metaKey;
 
 		if (isZoom) {
-			const zoomFactor = e.deltaY > 0 ? 1.02 : 0.98;
+			const zoomFactor = e.deltaY > 0 ? 1.06 : 0.94;
 
 			viewBox.x += e.offsetX * viewBox.zoom * (1 - zoomFactor);
 			viewBox.y += e.offsetY * viewBox.zoom * (1 - zoomFactor);

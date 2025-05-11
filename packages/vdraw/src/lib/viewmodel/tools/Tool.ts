@@ -1,5 +1,9 @@
-import { CanvasViewModel } from '../canvas/CanvasVM.svelte.js';
+import type { CanvasViewModel } from '../canvas/CanvasVM.svelte.js';
 
 export interface Tool {
 	onmousedown(e: MouseEvent, canvasVM: CanvasViewModel): void;
+	captureMouseMove: boolean;
+	onmousemove(e: MouseEvent, canvasVM: CanvasViewModel): void;
+	captureKeyboard: boolean;
+	onkeydown(e: KeyboardEvent, canvasVM: CanvasViewModel): void;
 }

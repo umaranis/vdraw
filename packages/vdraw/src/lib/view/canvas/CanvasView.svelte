@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Shape } from '$lib/model/shapes/Shape.js';
-	import { createModelViewMap } from '../modelViewMap.js';
+	import { createModelViewMap } from '../../viewmodel/shapes/modelViewMap.js';
 	import type { CanvasViewModel } from '$lib/viewmodel/canvas/CanvasVM.svelte.js';
 	import SvgContainer from './SvgContainer.svelte';
 
@@ -36,15 +36,19 @@
 		canvasVM.toolPalette.currentTool.onmousedown(e, canvasVM);
 	}}
 	onkeydown={(e: KeyboardEvent) => {
-		switch (e.key) {
-			case 'Escape':
-				canvasVM.toolPalette.switchToDefault();
-				canvasVM.clearSelection();
-				break;
-			case 'Delete':
-			case 'Backspace':
-				canvasVM.deleteSelectedShapes();
-				break;
+		if (canvasVM.toolPalette.currentTool.captureKeyboard) {
+			canvasVM.toolPalette.currentTool.onkeydown(e, canvasVM);
+		} else {
+			switch (e.key) {
+				case 'Escape':
+					canvasVM.toolPalette.switchToDefault();
+					canvasVM.clearSelection();
+					break;
+				case 'Delete':
+				case 'Backspace':
+					canvasVM.deleteSelectedShapes();
+					break;
+			}
 		}
 	}}
 >
@@ -91,11 +95,12 @@
 						Math.abs(dragStartCoords.y - event.clientY) > 1))
 			) {
 				canvas.selected.forEach((shape) => {
-					shape.x += event.movementX;
-					shape.y += event.movementY;
+					mapModelView[shape.type].move(shape, event.movementX, event.movementY);
 				});
 				hasDragged = true;
 			}
+		} else if (canvasVM.toolPalette.currentTool.captureMouseMove) {
+			canvasVM.toolPalette.currentTool.onmousemove(event, canvasVM);
 		}
 	}}
 	onmouseup={(e: MouseEvent) => {

@@ -5,7 +5,6 @@ export class CircleTool implements Tool {
 	onmousedown(e: MouseEvent, canvasVM: CanvasViewModel) {
 		const circle = {
 			type: 'circle',
-			selected: false,
 			x: e.offsetX,
 			y: e.offsetY,
 			radius: 50,
@@ -16,4 +15,9 @@ export class CircleTool implements Tool {
 		canvasVM.canvas.shapes.push(circle);
 		canvasVM.toolPalette.switchToDefault();
 	}
+
+	captureMouseMove = false;
+	onmousemove(): void {}
+	captureKeyboard = false;
+	onkeydown(): void {}
 }

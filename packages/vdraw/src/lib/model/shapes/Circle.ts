@@ -9,3 +9,8 @@ export interface CircleType extends Shape {
 	stroke?: string;
 	strokeWidth?: number;
 }
+
+export function move(shape: CircleType, dx: number, dy: number) {
+	shape.x += dx;
+	shape.y += dy;
+}

@@ -10,3 +10,8 @@ export interface RectangleType extends Shape {
 	stroke?: string;
 	strokeWidth?: number;
 }
+
+export function move(shape: RectangleType, dx: number, dy: number) {
+	shape.x += dx;
+	shape.y += dy;
+}

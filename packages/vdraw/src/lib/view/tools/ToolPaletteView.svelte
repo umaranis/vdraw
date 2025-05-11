@@ -3,6 +3,7 @@
 	import CircleToolView from './CircleToolView.svelte';
 	import type { CanvasViewModel } from '$lib/viewmodel/canvas/CanvasVM.svelte.js';
 	import SelectionToolView from './SelectionToolView.svelte';
+	import PathToolView from './PathToolView.svelte';
 
 	let { canvasVM }: { canvasVM: CanvasViewModel } = $props();
 </script>
@@ -11,6 +12,7 @@
 	<SelectionToolView {canvasVM} />
 	<RectangleToolView {canvasVM} />
 	<CircleToolView {canvasVM} />
+	<PathToolView {canvasVM} />
 </div>
 
 <style>
