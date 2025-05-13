@@ -1,16 +1,17 @@
 import type { CanvasViewModel } from '../canvas/CanvasVM.svelte.js';
 import type { Tool } from './Tool.js';
-import type { PathType } from '../../model/shapes/path/Path.js';
+import type { Path } from '../../model/shapes/path/Path.js';
 
 export class PathTool implements Tool {
-	currentPath: PathType | null = null;
+	currentPath: Path | null = null;
 	captureMouseMove = false;
 	captureKeyboard = false;
+	captureMouseDownOnShape = false;
 	currentCommand: 'L' | 'T' = 'L';
 
 	onmousedown(e: MouseEvent, canvasVM: CanvasViewModel) {
 		if (!this.currentPath) {
-			const path: PathType = {
+			const path: Path = {
 				type: 'path',
 				segments: [
 					{ c: 'M', x: e.offsetX, y: e.offsetY },
@@ -21,9 +22,10 @@ export class PathTool implements Tool {
 				strokeWidth: 8
 			};
 			const index = canvasVM.canvas.shapes.push(path);
-			this.currentPath = canvasVM.canvas.shapes[index - 1] as PathType;
+			this.currentPath = canvasVM.canvas.shapes[index - 1] as Path;
 			this.captureMouseMove = true;
 			this.captureKeyboard = true;
+			this.captureMouseDownOnShape = true;
 		} else {
 			this.currentPath.segments.push({ c: this.currentCommand, x: e.offsetX, y: e.offsetY });
 		}
@@ -51,11 +53,16 @@ export class PathTool implements Tool {
 			this.currentPath = null;
 			this.captureMouseMove = false;
 			this.captureKeyboard = false;
+			this.captureMouseDownOnShape = false;
 			this.currentCommand = 'L';
 			canvasVM.toolPalette.switchToDefault();
 		} else if (e.key === 'Tab') {
 			e.preventDefault();
 			this.currentCommand = this.currentCommand === 'L' ? 'T' : 'L';
 		}
+	}
+
+	onmousedownOnShape(e: MouseEvent, canvasVM: CanvasViewModel): void {
+		this.onmousedown(e, canvasVM);
 	}
 }

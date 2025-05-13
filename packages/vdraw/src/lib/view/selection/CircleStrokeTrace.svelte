@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { CircleType } from '$lib/model/shapes/Circle.js';
+	import type { Circle } from '$lib/model/shapes/Circle.js';
 
-	let { shape: c, ...rest }: { shape: CircleType } = $props();
+	let { shape: c, ...rest }: { shape: Circle } = $props();
 </script>
 
 <!-- svelte-ignore attribute_global_event_reference -->

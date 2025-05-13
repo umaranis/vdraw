@@ -19,13 +19,18 @@
 
 	function mouseDownOnShape(e: MouseEvent, shape: Shape) {
 		e.stopPropagation();
-		if (canvasVM.isShapeSelected(shape)) {
-			grabbedSelectedShape = shape;
+
+		if (canvasVM.toolPalette.currentTool.captureMouseDownOnShape) {
+			canvasVM.toolPalette.currentTool.onmousedownOnShape(e, canvasVM, shape);
 		} else {
-			canvasVM.addToSelection(shape, e.target as SVGGraphicsElement, !e.shiftKey);
+			if (canvasVM.isShapeSelected(shape)) {
+				grabbedSelectedShape = shape;
+			} else {
+				canvasVM.addToSelection(shape, e.target as SVGGraphicsElement, !e.shiftKey);
+			}
+			canvasVM.draggedShape = shape;
+			dragStartCoords = { x: e.clientX, y: e.clientY };
 		}
-		canvasVM.draggedShape = shape;
-		dragStartCoords = { x: e.clientX, y: e.clientY };
 	}
 </script>
 
@@ -69,7 +74,7 @@
 		/>
 	{/each}
 
-	{#if canvasVM.hoveredShape}
+	{#if canvasVM.hoveredShape && !canvasVM.toolPalette.currentTool.captureMouseMove}
 		{@const StrokeTraceComponent = mapModelView[canvasVM.hoveredShape.type].strokeTrace}
 		<StrokeTraceComponent
 			shape={canvasVM.hoveredShape}

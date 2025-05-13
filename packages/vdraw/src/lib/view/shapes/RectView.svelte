@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { RectangleType } from '../../model/shapes/Rectangle.js';
+	import type { Rectangle } from '../../model/shapes/Rectangle.js';
 
 	let {
 		shape: r,
@@ -7,7 +7,7 @@
 		onmouseenter,
 		onmouseleave
 	}: {
-		shape: RectangleType;
+		shape: Rectangle;
 		onmousedown: (e: MouseEvent) => void;
 		onmouseenter: () => void;
 		onmouseleave: () => void;

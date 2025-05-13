@@ -1,10 +1,10 @@
 import type { Tool } from './Tool.js';
 import type { CanvasViewModel } from '../canvas/CanvasVM.svelte.js';
-import type { RectangleType } from '../../model/shapes/Rectangle.js';
+import type { Rectangle } from '../../model/shapes/Rectangle.js';
 
 export class RectangleTool implements Tool {
 	onmousedown(e: MouseEvent, canvasVM: CanvasViewModel) {
-		const rect: RectangleType = {
+		const rect: Rectangle = {
 			type: 'rect',
 			x: e.offsetX,
 			y: e.offsetY,

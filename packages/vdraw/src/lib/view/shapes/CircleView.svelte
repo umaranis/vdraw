@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { CircleType } from '../../model/shapes/Circle.js';
+	import type { Circle } from '../../model/shapes/Circle.js';
 	import CircleStrokeTrace from '../selection/CircleStrokeTrace.svelte';
 
 	let {
@@ -8,7 +8,7 @@
 		onmouseenter,
 		onmouseleave
 	}: {
-		shape: CircleType;
+		shape: Circle;
 		onmousedown: () => void;
 		onmouseenter: () => void;
 		onmouseleave: () => void;

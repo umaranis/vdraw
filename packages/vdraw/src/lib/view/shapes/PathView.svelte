@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { convertToPathData } from '$lib/model/shapes/path/convertToPathData.js';
-	import type { PathType } from '../../model/shapes/path/Path.js';
+	import type { Path } from '../../model/shapes/path/Path.js';
 
 	let {
 		shape: p,
@@ -8,7 +8,7 @@
 		onmouseenter,
 		onmouseleave
 	}: {
-		shape: PathType;
+		shape: Path;
 		onmousedown: () => void;
 		onmouseenter: () => void;
 		onmouseleave: () => void;

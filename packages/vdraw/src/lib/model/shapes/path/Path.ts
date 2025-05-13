@@ -62,7 +62,7 @@ export type Segment =
 	| ASegment
 	| ZSegment;
 
-export interface PathType extends Shape {
+export interface Path extends Shape {
 	type: 'path';
 	segments: Segment[];
 	fill?: string;
@@ -74,7 +74,7 @@ export interface PathType extends Shape {
  * Moves the path by the given amount.
  * Only the first segment is moved assuming the rest is relative.
  */
-export function move(shape: PathType, dx: number, dy: number) {
+export function move(shape: Path, dx: number, dy: number) {
 	if ((shape.segments.length > 0 && shape.segments[0].c === 'M') || shape.segments[0].c === 'm') {
 		shape.segments[0].x += dx;
 		shape.segments[0].y += dy;

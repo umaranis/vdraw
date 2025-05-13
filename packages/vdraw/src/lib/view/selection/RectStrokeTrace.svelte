@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { RectangleType } from '$lib/model/shapes/Rectangle.js';
+	import type { Rectangle } from '$lib/model/shapes/Rectangle.js';
 
-	let { shape: r, ...rest }: { shape: RectangleType } = $props();
+	let { shape: r, ...rest }: { shape: Rectangle } = $props();
 	const strokeWidth = $derived(r.strokeWidth ?? 0);
 </script>
 
