@@ -10,4 +10,6 @@ export class SelectionTool implements Tool {
 	onmousemove(): void {}
 	captureKeyboard = false;
 	onkeydown(): void {}
+	captureMouseDownOnShape = false;
+	onmousedownOnShape(): void {}
 }

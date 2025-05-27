@@ -22,4 +22,6 @@ export class RectangleTool implements Tool {
 	onmousemove(): void {}
 	captureKeyboard = false;
 	onkeydown(): void {}
+	captureMouseDownOnShape = false;
+	onmousedownOnShape(): void {}
 }

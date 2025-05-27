@@ -2,7 +2,7 @@ import { RectangleTool } from '$lib/viewmodel/tools/RectangleTool.js';
 import type { Tool } from '$lib/viewmodel/tools/Tool.js';
 import { CircleTool } from './CircleTool.js';
 import { SelectionTool } from './SelectionTool.js';
-import { PathTool } from './PathTool.js';
+import { PathTool } from './pathTool/PathTool.js';
 
 export interface ToolPalette {
 	currentTool: Tool;
