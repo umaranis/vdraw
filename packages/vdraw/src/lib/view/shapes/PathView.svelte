@@ -9,7 +9,7 @@
 		onmouseleave
 	}: {
 		shape: Path;
-		onmousedown: () => void;
+		onmousedown: (e: MouseEvent) => void;
 		onmouseenter: () => void;
 		onmouseleave: () => void;
 	} = $props();

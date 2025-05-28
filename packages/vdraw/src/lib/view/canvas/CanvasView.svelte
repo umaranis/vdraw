@@ -86,7 +86,11 @@
 
 	{#each canvas.selected as shape (shape)}
 		{@const SelectionComponent = mapModelView[shape.type].selection}
-		<SelectionComponent {shape} element={canvasVM.getSelectedSvgElement(shape)} />
+		<SelectionComponent
+			{shape}
+			element={canvasVM.getSelectedSvgElement(shape)}
+			onmousedownOnShape={(e: MouseEvent) => mouseDownOnShape(e, shape)}
+		/>
 	{/each}
 </SvgContainer>
 

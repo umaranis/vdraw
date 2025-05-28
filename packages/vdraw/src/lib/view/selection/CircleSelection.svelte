@@ -3,8 +3,15 @@
 	import CircleStrokeTrace from './CircleStrokeTrace.svelte';
 	import SelectionDecoratorRect from './SelectionDecoratorRect.svelte';
 
-	let { shape: c, element }: { shape: Circle; element: SVGGraphicsElement } = $props();
-	// getSvgElement doesn't return null because it is only called after the element is clicked and selected
+	let {
+		shape: c,
+		element,
+		onmousedownOnShape
+	}: {
+		shape: Circle;
+		element: SVGGraphicsElement;
+		onmousedownOnShape: (e: MouseEvent) => void;
+	} = $props();
 	let r = $derived.by(() => {
 		// add dependency
 		c.x;
@@ -16,5 +23,5 @@
 	let strokeWidth = $derived(c.strokeWidth ?? 0);
 </script>
 
-<CircleStrokeTrace shape={c} />
+<CircleStrokeTrace shape={c} onmousedown={onmousedownOnShape} />
 <SelectionDecoratorRect {r} {strokeWidth} />

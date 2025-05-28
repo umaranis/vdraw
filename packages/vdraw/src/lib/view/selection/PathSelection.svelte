@@ -1,10 +1,17 @@
 <script lang="ts">
-	import type { Path } from '$lib/model/shapes/path/Path.js';
+	import type { MSegment, Path } from '$lib/model/shapes/path/Path.js';
 	import PathStrokeTrace from './PathStrokeTrace.svelte';
 	import SelectionDecoratorRect from './SelectionDecoratorRect.svelte';
 
-	let { shape: p, element }: { shape: Path; element: SVGGraphicsElement } = $props();
-	// getSvgElement doesn't return null because it is only called after the element is clicked and selected
+	let {
+		shape: p,
+		element,
+		onmousedownOnShape
+	}: {
+		shape: Path;
+		element: SVGGraphicsElement;
+		onmousedownOnShape: (e: MouseEvent) => void;
+	} = $props();
 	let r = $derived.by(() => {
 		// add dependency
 		(p.segments[0] as MSegment).x;
@@ -15,5 +22,5 @@
 	let strokeWidth = $derived(p.strokeWidth ?? 0);
 </script>
 
-<PathStrokeTrace shape={p} />
+<PathStrokeTrace shape={p} onmousedown={onmousedownOnShape} />
 <SelectionDecoratorRect {r} {strokeWidth} />

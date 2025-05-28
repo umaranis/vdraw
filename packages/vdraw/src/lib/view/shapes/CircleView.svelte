@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Circle } from '../../model/shapes/Circle.js';
-	import CircleStrokeTrace from '../selection/CircleStrokeTrace.svelte';
 
 	let {
 		shape: c,
@@ -9,7 +8,7 @@
 		onmouseleave
 	}: {
 		shape: Circle;
-		onmousedown: () => void;
+		onmousedown: (e: MouseEvent) => void;
 		onmouseenter: () => void;
 		onmouseleave: () => void;
 	} = $props();

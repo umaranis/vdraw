@@ -1,7 +1,17 @@
 <script lang="ts">
 	import type { Rectangle } from '$lib/model/shapes/Rectangle.js';
 
-	let { shape: r, ...rest }: { shape: Rectangle } = $props();
+	let {
+		shape: r,
+		onmousedown,
+		onmouseenter,
+		onmouseleave
+	}: {
+		shape: Rectangle;
+		onmousedown: (e: MouseEvent) => void;
+		onmouseenter?: () => void;
+		onmouseleave?: () => void;
+	} = $props();
 	const strokeWidth = $derived(r.strokeWidth ?? 0);
 </script>
 
@@ -12,7 +22,9 @@
 	width={r.width + strokeWidth / 2}
 	height={r.height + strokeWidth / 2}
 	class="trace"
-	{...rest}
+	{onmousedown}
+	{onmouseenter}
+	{onmouseleave}
 />
 
 <style>
