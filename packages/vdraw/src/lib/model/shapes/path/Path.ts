@@ -76,9 +76,19 @@ export interface Path extends Shape {
  * Only the first segment is moved assuming the rest is relative.
  */
 export function move(shape: Path, dx: number, dy: number) {
-	if ((shape.segments.length > 0 && shape.segments[0].c === 'M') || shape.segments[0].c === 'm') {
-		shape.segments[0].x += dx;
-		shape.segments[0].y += dy;
+	for (const segment of shape.segments) {
+		if ('x' in segment) {
+			segment.x += dx;
+		}
+		if ('y' in segment) {
+			segment.y += dy;
+		}
+		if (isC(segment) || isS(segment) || isQ(segment)) {
+			if ('x1' in segment) segment.x1 += dx;
+			if ('y1' in segment) segment.y1 += dy;
+			if ('x2' in segment) segment.x2 += dx;
+			if ('y2' in segment) segment.y2 += dy;
+		}
 	}
 }
 

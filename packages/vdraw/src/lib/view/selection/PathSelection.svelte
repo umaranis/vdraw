@@ -7,7 +7,8 @@
 	// getSvgElement doesn't return null because it is only called after the element is clicked and selected
 	let r = $derived.by(() => {
 		// add dependency
-		p.segments;
+		(p.segments[0] as MSegment).x;
+		(p.segments[0] as MSegment).y;
 
 		return element.getBBox();
 	});
