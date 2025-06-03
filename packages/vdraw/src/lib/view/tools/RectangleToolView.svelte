@@ -8,7 +8,7 @@
 <button
 	class="tool-button {toolPalette.currentTool === toolPalette.tools.rectTool ? 'active' : ''}"
 	onclick={() => {
-		toolPalette.currentTool = toolPalette.tools.rectTool;
+		canvasVM.selectTool(toolPalette.tools.rectTool);
 		canvasVM.focus();
 	}}
 	aria-label="Rectangle Tool"

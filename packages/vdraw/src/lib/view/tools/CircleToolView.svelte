@@ -8,7 +8,7 @@
 <button
 	class="tool-button {toolPalette.currentTool === toolPalette.tools.circleTool ? 'active' : ''}"
 	onclick={() => {
-		toolPalette.currentTool = toolPalette.tools.circleTool;
+		canvasVM.selectTool(toolPalette.tools.circleTool);
 		canvasVM.focus();
 	}}
 	aria-label="Circle Tool"

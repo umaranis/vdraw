@@ -1,10 +1,11 @@
 import type { Canvas } from '$lib/model/Canvas.js';
 import type { Shape } from '$lib/model/shapes/Shape.js';
-import { createToolPalette } from '$lib/viewmodel/tools/ToolPalette.js';
+import { createToolPalette, type ToolPalette } from '$lib/viewmodel/tools/ToolPalette.js';
+import type { Tool } from '../tools/Tool.js';
 
 export class CanvasViewModel {
 	canvas;
-	toolPalette = $state(createToolPalette());
+	private _toolPalette = $state(createToolPalette());
 	private selectedSvgElements: Map<Shape, SVGElement> = new Map();
 
 	hoveredShape = $state<Shape | null>(null);
@@ -15,6 +16,10 @@ export class CanvasViewModel {
 
 	constructor(canvas: Canvas) {
 		this.canvas = canvas;
+	}
+
+	get toolPalette(): Readonly<ToolPalette> {
+		return this._toolPalette;
 	}
 
 	addToSelection(shape: Shape, element: SVGGraphicsElement, clear: boolean = false) {
@@ -70,5 +75,10 @@ export class CanvasViewModel {
 
 	convertYToViewBox(y: number) {
 		return y * this.canvas.viewBox.zoom + this.canvas.viewBox.y;
+	}
+
+	selectTool(tool: Tool) {
+		this._toolPalette.currentTool = tool;
+		this.clearSelection();
 	}
 }

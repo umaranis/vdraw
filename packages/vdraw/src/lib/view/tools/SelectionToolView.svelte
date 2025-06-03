@@ -8,7 +8,8 @@
 <button
 	class="tool-button {toolPalette.currentTool === toolPalette.tools.selectionTool ? 'active' : ''}"
 	onclick={() => {
-		toolPalette.currentTool = toolPalette.tools.selectionTool;
+		canvasVM.selectTool(toolPalette.tools.selectionTool);
+		canvasVM.focus();
 	}}
 	aria-label="Selection Tool"
 >
