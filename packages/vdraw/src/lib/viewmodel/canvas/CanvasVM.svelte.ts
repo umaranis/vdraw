@@ -63,4 +63,12 @@ export class CanvasViewModel {
 	focus() {
 		this.svgContainerRef?.focus();
 	}
+
+	convertXToViewBox(x: number) {
+		return x * this.canvas.viewBox.zoom + this.canvas.viewBox.x;
+	}
+
+	convertYToViewBox(y: number) {
+		return y * this.canvas.viewBox.zoom + this.canvas.viewBox.y;
+	}
 }

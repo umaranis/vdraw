@@ -5,8 +5,8 @@ export class CircleTool implements Tool {
 	onmousedown(e: MouseEvent, canvasVM: CanvasViewModel) {
 		const circle = {
 			type: 'circle',
-			x: e.offsetX,
-			y: e.offsetY,
+			x: canvasVM.convertXToViewBox(e.offsetX),
+			y: canvasVM.convertYToViewBox(e.offsetY),
 			radius: 50,
 			fill: 'blue',
 			stroke: 'black',

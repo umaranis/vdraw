@@ -22,14 +22,12 @@ export class PathTool implements Tool {
 	currentSegmentTool: SegmentTool = this.lineSegmentTool;
 
 	onmousedown(e: MouseEvent, canvasVM: CanvasViewModel) {
-		this.updateLastPoint(e);
+		this.updateLastPoint(e, canvasVM);
+		const { x, y } = this.lastMousePoint;
 		if (!this.currentPath) {
 			const path: Path = {
 				type: 'path',
-				segments: [
-					{ c: 'M', x: e.offsetX, y: e.offsetY },
-					this.currentSegmentTool.createSegment(e.offsetX, e.offsetY)
-				],
+				segments: [{ c: 'M', x: x, y: y }, this.currentSegmentTool.createSegment(x, y)],
 				fill: 'none',
 				stroke: 'black',
 				strokeWidth: 8
@@ -41,15 +39,16 @@ export class PathTool implements Tool {
 			this.captureMouseDownOnShape = true;
 		} else {
 			this.currentSegmentTool = this.lineSegmentTool;
-			this.currentPath.segments.push(this.currentSegmentTool.createSegment(e.offsetX, e.offsetY));
+			this.currentPath.segments.push(this.currentSegmentTool.createSegment(x, y));
 		}
 	}
 
-	onmousemove(e: MouseEvent) {
-		this.updateLastPoint(e);
+	onmousemove(e: MouseEvent, canvasVM: CanvasViewModel) {
+		this.updateLastPoint(e, canvasVM);
+		const { x, y } = this.lastMousePoint;
 		const lastSegment = getLastSegment(this.currentPath);
 		if (lastSegment) {
-			this.currentSegmentTool.updateSegment(lastSegment, e.offsetX, e.offsetY);
+			this.currentSegmentTool.updateSegment(lastSegment, x, y);
 		}
 	}
 
@@ -107,8 +106,8 @@ export class PathTool implements Tool {
 		this.onmousedown(e, canvasVM);
 	}
 
-	private updateLastPoint(e: MouseEvent) {
-		this.lastMousePoint.x = e.offsetX;
-		this.lastMousePoint.y = e.offsetY;
+	private updateLastPoint(e: MouseEvent, canvasVM: CanvasViewModel) {
+		this.lastMousePoint.x = canvasVM.convertXToViewBox(e.offsetX);
+		this.lastMousePoint.y = canvasVM.convertYToViewBox(e.offsetY);
 	}
 }

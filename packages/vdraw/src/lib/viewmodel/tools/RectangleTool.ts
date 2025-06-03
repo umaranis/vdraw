@@ -6,8 +6,8 @@ export class RectangleTool implements Tool {
 	onmousedown(e: MouseEvent, canvasVM: CanvasViewModel) {
 		const rect: Rectangle = {
 			type: 'rect',
-			x: e.offsetX,
-			y: e.offsetY,
+			x: canvasVM.convertXToViewBox(e.offsetX),
+			y: canvasVM.convertYToViewBox(e.offsetY),
 			width: 100,
 			height: 100,
 			fill: 'red',
